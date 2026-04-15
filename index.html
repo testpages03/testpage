@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BBVA Trust Account</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f0f2f5;
+    color: #1a1a2e;
+    min-height: 100vh;
+  }
+
+  /* ── BBVA LOGO SVG inline ── */
+  .bbva-logo-svg {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .bbva-wordmark {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #fff;
+    font-style: italic;
+  }
+
+  .bbva-wordmark-blue { color: #004481; font-style: italic; font-weight: 700; font-size: 1.6rem; letter-spacing: -0.02em; }
+
+  /* ── LOGIN ── */
+  .login-page {
+    min-height: 100vh;
+    display: flex;
+    background: #004481;
+  }
+
+  .login-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem;
+    background: linear-gradient(145deg, #004481 0%, #1464A0 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .login-left::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .login-left::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -60px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .login-left-content { position: relative; z-index: 1; }
+
+  .login-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 3rem;
+  }
+
+  .login-brand-icon {
+    width: 52px; height: 52px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* BBVA "b" icon approximation */
+  .bbva-b {
+    width: 28px; height: 28px;
+    background: #fff;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    position: relative;
+  }
+
+  .login-left h2 {
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  .login-left h2 span { color: #72c4f5; }
+
+  .login-left p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+    max-width: 380px;
+  }
+
+  .login-left-badges {
+    display: flex;
+    gap: 12px;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .login-badge {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 30px;
+    padding: 6px 14px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .login-right {
+    width: 420px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2.5rem;
+    box-shadow: -8px 0 40px rgba(0,0,0,0.1);
+  }
+
+  .login-right-logo {
+    margin-bottom: 2.5rem;
+    text-align: center;
+  }
+
+  .login-right-logo .bbva-wordmark-blue { font-size: 2.2rem; }
+
+  .login-right-logo p {
+    font-size: 12px;
+    color: #8a9bb0;
+    margin-top: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  .login-form { width: 100%; }
+
+  .login-form h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin-bottom: 0.3rem;
+  }
+
+  .login-form p {
+    font-size: 13px;
+    color: #8a9bb0;
+    margin-bottom: 1.8rem;
+  }
+
+  .form-group { margin-bottom: 1.2rem; }
+
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: #4a5568;
+    margin-bottom: 6px;
+    letter-spacing: 0.03em;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #1a1a2e;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    background: #f8fafc;
+  }
+
+  .form-group input:focus {
+    border-color: #004481;
+    box-shadow: 0 0 0 3px rgba(0,68,129,0.1);
+    background: #fff;
+  }
+
+  .btn-login {
+    width: 100%;
+    padding: 0.9rem;
+    background: #004481;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    margin-top: 0.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-login:hover { background: #1464A0; transform: translateY(-1px); }
+  .btn-login:active { transform: scale(0.98); }
+
+  .login-error {
+    display: none;
+    background: #fff5f5;
+    border: 1px solid #fed7d7;
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    font-size: 12px;
+    color: #c53030;
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  .login-footer-note {
+    text-align: center;
+    font-size: 11px;
+    color: #a0aec0;
+    margin-top: 1.5rem;
+    line-height: 1.6;
+  }
+
+  /* ── DASHBOARD ── */
+  .dashboard { display: none; min-height: 100vh; background: #f0f2f5; }
+
+  .topbar {
+    background: #004481;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  }
+
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .topbar-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(255,255,255,0.2);
+  }
+
+  .topbar-section {
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .topbar-user-info {
+    text-align: right;
+  }
+
+  .topbar-user-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #fff;
+  }
+
+  .topbar-user-role {
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .topbar-avatar {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    border: 1.5px solid rgba(255,255,255,0.25);
+  }
+
+  .btn-logout {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.8);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+  }
+
+  .btn-logout:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+  /* subnav */
+  .subnav {
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0 2.5rem;
+    overflow-x: auto;
+  }
+
+  .subnav-item {
+    font-size: 13px;
+    font-weight: 500;
+    color: #8a9bb0;
+    padding: 0.9rem 1.2rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+
+  .subnav-item.active { color: #004481; border-bottom-color: #004481; }
+  .subnav-item:hover { color: #004481; }
+
+  /* body */
+  .dash-body {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  .dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.8rem;
+  }
+
+  .dash-greeting {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a2e;
+  }
+
+  .dash-date {
+    font-size: 12px;
+    color: #8a9bb0;
+    margin-top: 3px;
+  }
+
+  .dash-alert {
+    background: #ebf8ff;
+    border: 1px solid #bee3f8;
+    border-left: 3px solid #004481;
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    font-size: 12px;
+    color: #2c5282;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* balance card */
+  .balance-card {
+    background: linear-gradient(135deg, #004481 0%, #1464A0 60%, #1a7ac4 100%);
+    border-radius: 16px;
+    padding: 2rem 2.5rem;
+    color: #fff;
+    margin-bottom: 1.2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .balance-card::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .balance-card::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; right: 100px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .balance-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.2rem;
+  }
+
+  .balance-type {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.65;
+    margin-bottom: 0.3rem;
+  }
+
+  .balance-amount {
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .balance-amount small {
+    font-size: 1.2rem;
+    font-weight: 400;
+    opacity: 0.65;
+    margin-left: 4px;
+  }
+
+  .balance-account {
+    font-size: 12px;
+    opacity: 0.55;
+    margin-top: 6px;
+    letter-spacing: 0.1em;
+  }
+
+  .balance-card-chip {
+    opacity: 0.3;
+    font-size: 2rem;
+  }
+
+  .balance-meta {
+    display: flex;
+    gap: 2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .bm-label { font-size: 10px; opacity: 0.55; letter-spacing: 0.1em; text-transform: uppercase; }
+  .bm-value { font-size: 15px; font-weight: 500; margin-top: 3px; }
+
+  /* stats */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .stat-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.2rem 1.4rem;
+    border: 1px solid #e8edf2;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .stat-icon-wrap {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .stat-icon-wrap.blue  { background: #ebf8ff; }
+  .stat-icon-wrap.green { background: #f0fff4; }
+  .stat-icon-wrap.red   { background: #fff5f5; }
+
+  .stat-info {}
+  .stat-label { font-size: 11px; color: #8a9bb0; text-transform: uppercase; letter-spacing: 0.08em; }
+  .stat-value { font-size: 1.2rem; font-weight: 600; color: #1a1a2e; margin-top: 2px; }
+  .stat-value.up   { color: #276749; }
+  .stat-value.down { color: #c53030; }
+
+  /* movements */
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a2e;
+  }
+
+  .section-link {
+    font-size: 12px;
+    color: #004481;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .movements-card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e8edf2;
+    overflow: hidden;
+  }
+
+  .movements-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    padding: 0.7rem 1.4rem;
+    background: #f8fafc;
+    border-bottom: 1px solid #e8edf2;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #8a9bb0;
+  }
+
+  .movement-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    align-items: center;
+    padding: 1rem 1.4rem;
+    border-bottom: 1px solid #f0f2f5;
+    transition: background 0.15s;
+  }
+
+  .movement-row:last-child { border-bottom: none; }
+  .movement-row:hover { background: #f8fafc; }
+
+  .mov-date { font-size: 12px; color: #8a9bb0; }
+
+  .mov-info { display: flex; align-items: center; gap: 10px; }
+
+  .mov-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .mov-icon.in  { background: #f0fff4; }
+  .mov-icon.out { background: #fff5f5; }
+  .mov-icon.pay { background: #ebf8ff; }
+
+  .mov-desc { font-size: 13px; font-weight: 500; color: #1a1a2e; }
+  .mov-ref  { font-size: 11px; color: #a0aec0; margin-top: 1px; }
+
+  .mov-amount { font-size: 14px; font-weight: 600; text-align: right; }
+  .mov-amount.pos { color: #276749; }
+  .mov-amount.neg { color: #c53030; }
+
+  .mov-status {
+    text-align: right;
+  }
+
+  .status-pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+  }
+
+  .status-pill.done    { background: #f0fff4; color: #276749; }
+  .status-pill.pending { background: #fefcbf; color: #744210; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .login-left { display: none; }
+    .login-right { width: 100%; }
+    .stats-row { grid-template-columns: 1fr; }
+    .movements-header { display: none; }
+    .movement-row { grid-template-columns: 1fr; gap: 4px; }
+    .topbar { padding: 0 1rem; }
+    .dash-body { padding: 1.5rem 1rem; }
+  }
+
+  .password-wrap {
+    position: relative;
+  }
+
+  .password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 6px;
+  }
+
+  .password-toggle:hover {
+    color: #004481;
+  }
+
+  .loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,0.92);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 9999;
+  }
+
+  .loading-spinner {
+    width: 54px;
+    height: 54px;
+    border: 4px solid #dbe7f3;
+    border-top: 4px solid #004481;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 16px;
+  }
+
+  .loading-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #004481;
+    letter-spacing: 0.03em;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+
+  
+  .loading-progress {
+    width: 240px;
+    height: 6px;
+    background: rgba(0,68,129,0.15);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 12px;
+  }
+
+  .loading-progress-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #004481, #1a7ac4);
+    border-radius: 999px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .loading-progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -40%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(
+      120deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,0.6) 50%,
+      rgba(255,255,255,0) 100%
+    );
+    animation: shine 1.2s infinite;
+  }
+
+  @keyframes shine {
+    from { left: -40%; }
+    to { left: 120%; }
+  }
+
+
+
+  .topbar-connection {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-right: 8px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  .connection-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 8px rgba(34,197,94,0.65);
+  }
+
+  .session-warning {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    width: 320px;
+    background: #fff;
+    border: 1px solid #dbe7f3;
+    border-left: 4px solid #f59e0b;
+    border-radius: 12px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.14);
+    padding: 14px 16px;
+    z-index: 10001;
+    display: none;
+  }
+
+  .session-warning-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 6px;
+  }
+
+  .session-warning-text {
+    font-size: 12px;
+    color: #5b6777;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+
+  .session-warning-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  .session-btn {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .session-btn.extend {
+    background: #004481;
+    color: #fff;
+  }
+
+  .session-btn.logout {
+    background: #eef2f7;
+    color: #1a1a2e;
+  }
+
+  .confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(13,24,36,0.42);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10002;
+  }
+
+  .confirm-box {
+    width: 360px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+    padding: 22px;
+  }
+
+  .confirm-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 8px;
+  }
+
+  .confirm-text {
+    font-size: 13px;
+    color: #607087;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .confirm-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .confirm-btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .confirm-btn.cancel {
+    background: #eef2f7;
+    color: #1a1a2e;
+  }
+
+  .confirm-btn.proceed {
+    background: #004481;
+    color: #fff;
+  }
+
+  .loading-steps {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #607087;
+    min-height: 18px;
+  }
+
+</style>
+</head>
+<body>
+<!-- ── LOGIN ── -->
+<div class="login-page" id="loginPage">
+<div class="login-left">
+<div class="login-left-content">
+<div class="login-brand">
+<span style="font-size:3.2rem;font-weight:700;font-style:italic;letter-spacing:-0.02em;color:#fff;">BBVA</span>
+</div>
+<h2>Welcome to<br/><span>BBVA Trust</span><br/>Account Portal</h2>
+<p>Manage your trust account, view balances, track transactions and stay in control of your finances — securely and easily.</p>
+<div class="login-left-badges">
+<div class="login-badge">🔒 256-bit SSL</div>
+<div class="login-badge">✅ FDIC Insured</div>
+<div class="login-badge">🌐 24/7 Access</div>
+</div>
+</div>
+</div>
+<div class="login-right">
+<div class="login-right-logo">
+<span class="bbva-wordmark-blue" style="font-size:2.8rem;font-style:italic;font-weight:700;letter-spacing:-0.02em;color:#004481;display:block;text-align:center;">BBVA</span>
+<p>Trust Account · Online Banking</p>
+</div>
+<div class="login-form">
+<h3>Sign in</h3>
+<p>Enter your credentials to access your account</p>
+<div class="form-group">
+<label>Username</label>
+<input autocomplete="off" id="inputUser" placeholder="Your username" type="text"/>
+</div>
+<div class="form-group">
+  <label>Password</label>
+  <div style="position:relative;">
+    <input type="password" id="inputPass" placeholder="••••••••"
+      onkeydown="if(event.key==='Enter') doLogin()"
+      style="padding-right:70px;">
+
+    <button type="button"
+      onclick="togglePassword()" id="togglePasswordBtn"
+      style="
+        position:absolute;
+        right:10px;
+        top:50%;
+        transform:translateY(-50%);
+        border:none;
+        background:none;
+        font-size:12px;
+        font-weight:600;
+        color:#6b7280;
+        cursor:pointer;">
+      Show
+    </button>
+  </div>
+</div>
+<button class="btn-login" onclick="doLogin()">Sign In</button>
+<div class="login-error" id="loginError">⚠️ Incorrect username or password. Please try again.</div>
+<div class="login-footer-note">
+        Protected by BBVA Security Systems<br/>
+        © 2026 BBVA Trust Account · All rights reserved
+      </div>
+</div>
+</div>
+</div>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Signing in securely...</div>
+  <div class="loading-steps" id="loadingStepText">Verifying credentials...</div>
+  <div class="loading-progress"><div class="loading-progress-bar" id="loadingProgressBar"></div></div>
+</div>
+
+
+<div class="session-warning" id="sessionWarningBox">
+  <div class="session-warning-title">Session expiring soon</div>
+  <div class="session-warning-text" id="sessionWarningText">Your secure session will expire soon due to inactivity.</div>
+  <div class="session-warning-actions">
+    <button class="session-btn logout" onclick="confirmLogout()">Log out</button>
+    <button class="session-btn extend" onclick="extendSession()">Extend session</button>
+  </div>
+</div>
+
+<div class="confirm-overlay" id="confirmLogoutOverlay">
+  <div class="confirm-box">
+    <div class="confirm-title">Confirm log out</div>
+    <div class="confirm-text">Are you sure you want to close your current secure session?</div>
+    <div class="confirm-actions">
+      <button class="confirm-btn cancel" onclick="closeLogoutConfirm()">Cancel</button>
+      <button class="confirm-btn proceed" onclick="doLogoutConfirmed()">Log out</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── DASHBOARD ── -->
+<div class="dashboard" id="dashboard">
+<div class="topbar">
+<div class="topbar-left">
+<span class="bbva-wordmark" style="font-size:1.8rem;color:#fff;">BBVA</span>
+<div class="topbar-divider"></div>
+<span class="topbar-section">Trust Account</span>
+</div>
+<div class="topbar-right">
+      <div class="topbar-connection">
+        <span class="connection-dot"></span>
+        <span id="connectionStatusText">Secure connection active</span>
+      </div>
+<div class="topbar-user-info">
+<div class="topbar-user-name" id="topbarName">Emile A. Pelletier</div>
+<div class="topbar-user-role">Trust Account Holder</div>
+</div>
+<div class="topbar-avatar">👤</div>
+<button class="btn-logout" onclick="doLogout()">Sign Out</button>
+</div>
+</div>
+<div class="subnav">
+<div class="subnav-item active">Overview</div>
+<div class="subnav-item" onclick="printStatement()" style="cursor:pointer;">🖨️ Print Bank Statement</div>
+</div>
+<div class="dash-body">
+<div class="dash-header">
+<div>
+<div class="dash-greeting" id="greeting">Good morning, Emile 👋</div>
+<div class="dash-date" id="dashDate"></div>
+</div>
+<div class="dash-alert" id="lastLoginBox">🔒 Last login: -- · Secure session active</div>
+</div>
+<!-- Balance -->
+<div class="balance-card">
+<div class="balance-top">
+<div>
+<div class="balance-type">BBVA Trust Account</div>
+<div class="balance-amount" id="userBalance">$0.00 <small>USD</small></div>
+<div class="balance-account" id="userAccount">Account No. ----</div>
+</div>
+<div class="balance-card-chip">💳</div>
+</div>
+<div class="balance-meta">
+      <div>
+        <div class="bm-label">Session started</div>
+        <div class="bm-value" id="sessionStartedAt">--</div>
+      </div>
+      <div>
+        <div class="bm-label">Session time</div>
+        <div class="bm-value" id="sessionElapsed">00:00</div>
+      </div>
+<div>
+<div class="bm-label">Monthly Income</div>
+<div class="bm-value" id="userIncome">--</div>
+</div>
+<div>
+<div class="bm-label" id="userDeductLabel">Deductions</div>
+<div class="bm-value" id="userDeduct">--</div>
+</div>
+<div>
+<div class="bm-label">Trust Reference</div>
+<div class="bm-value" id="userTrustRef">--</div>
+</div>
+<div>
+<div class="bm-label">Status</div>
+<div class="bm-value" id="userStatus">✅ Active</div>
+</div>
+</div>
+</div>
+<!-- Stats -->
+<div class="stats-row">
+<div class="stat-card">
+<div class="stat-icon-wrap blue">💰</div>
+<div class="stat-info">
+<div class="stat-label">Savings Account</div>
+<div class="stat-value" id="userSavings">--</div>
+</div>
+</div>
+<div class="stat-card">
+<div class="stat-icon-wrap green">📈</div>
+<div class="stat-info">
+<div class="stat-label">Investments</div>
+<div class="stat-value up" id="userInvestments">--</div>
+</div>
+</div>
+<div class="stat-card">
+<div class="stat-icon-wrap red">📋</div>
+<div class="stat-info">
+<div class="stat-label">Credit Balance</div>
+<div class="stat-value down" id="userCredit">--</div>
+</div>
+</div>
+</div>
+<!-- Movements -->
+<div class="section-header">
+<div class="section-title">Recent Transactions</div>
+<a class="section-link">View all →</a>
+</div>
+<div class="movements-card">
+<div class="movements-header">
+<span>Date</span>
+<span>Description</span>
+<span style="text-align:right">Amount</span>
+<span style="text-align:right">Status</span>
+</div>
+<div id="transactionsBody"></div>
+</div>
+</div>
+</div>
+<script>
+// ═══════════════════════════════════════════════════════════════════════
+//  USUARIOS — agrega o edita cada cuenta aquí
+//  Copia el bloque de "eapel14" para crear un nuevo usuario
+// ═══════════════════════════════════════════════════════════════════════
+const users = {
+
+  eapel14: {
+    name:        "Emile A. Pelletier",
+    password:    "pass123",
+    balance:     "$997,000.00",
+    account:     "Account No. **** **** **** 3009",
+    income:      "+$12,500.00",
+    deductLabel: "Deductions",
+    deduct:      "-$33,984.00",
+    trustRef:    "TR-2026-0482",
+    status:      "⚠️ Suspended",
+    savings:     "N/A",
+    investments: "N/A",
+    credit:      "N/A",
+    transactions: [
+      { date:"Apr 14, 2026", time:"09:12 AM", icon:"💰", type:"in",  desc:"Payroll Deposit",               ref:"REF: PAY-20260414",   amount:"+$8,500.00",  status:"done"    },
+      { date:"Apr 13, 2026", time:"03:45 PM", icon:"🛒", type:"out", desc:"Grocery Store Purchase",         ref:"REF: POS-88741",      amount:"-$1,240.00",  status:"done"    },
+      { date:"Apr 12, 2026", time:"11:00 AM", icon:"📱", type:"pay", desc:"Internet Service Payment",       ref:"REF: UTIL-20260412",  amount:"-$650.00",    status:"done"    },
+      { date:"Apr 11, 2026", time:"06:20 PM", icon:"🔄", type:"in",  desc:"Incoming Transfer — J. García",  ref:"REF: TRF-00291",      amount:"+$2,000.00",  status:"done"    },
+      { date:"Apr 10, 2026", time:"10:05 AM", icon:"⚡", type:"pay", desc:"Electric Bill — CFE",            ref:"REF: ELEC-04102026",  amount:"-$480.00",    status:"done"    },
+      { date:"Apr 09, 2026", time:"08:00 AM", icon:"🏠", type:"out", desc:"Monthly Rent Payment",           ref:"REF: RENT-APR2026",   amount:"-$5,500.00",  status:"done"    },
+      { date:"Apr 08, 2026", time:"12:00 PM", icon:"📈", type:"in",  desc:"Investment Return",              ref:"REF: INV-TR2026",     amount:"+$320.00",    status:"pending" }
+    ]
+  },
+
+
+  rzwetzig: {
+    name:        "Randolph Zwetzig",
+    password:    "zwetzig123",
+    balance:     "$0.00",
+    account:     "Account No. **** **** **** 3009",
+    income:      "$0.00",
+    deductLabel: "Deductions",
+    deduct:      "$0.00",
+    trustRef:    "TR-2026-0482",
+    status:      "✅ Active",
+    savings:     "N/A",
+    investments: "N/A",
+    credit:      "N/A",
+    transactions: [
+      { date:"Apr 14, 2026", time:"09:12 AM", icon:"💵", type:"in",  desc:"Cashier's Check Deposit",               ref:"REF: UIF-20260414",   amount:"+$265,000.00",  status:"pending"    },
+
+    ]
+  },
+
+};
+
+// ═══════════════════════════════════════════════════════════════════════
+//  MOTOR — no es necesario editar nada debajo de esta línea
+// ═══════════════════════════════════════════════════════════════════════
+function getGreeting() {
+  const h = new Date().getHours();
+  if (h < 12) return "Good morning";
+  if (h < 18) return "Good afternoon";
+  return "Good evening";
+}
+
+function loadUserData(u) {
+  document.getElementById('userBalance').innerHTML       = u.balance + ' <small>USD</small>';
+  document.getElementById('userAccount').textContent     = u.account;
+  document.getElementById('userIncome').textContent      = u.income;
+  document.getElementById('userDeductLabel').textContent = u.deductLabel;
+  document.getElementById('userDeduct').textContent      = u.deduct;
+  document.getElementById('userTrustRef').textContent    = u.trustRef;
+  document.getElementById('userStatus').textContent      = u.status;
+  document.getElementById('userSavings').textContent     = u.savings;
+  document.getElementById('userInvestments').textContent = u.investments;
+  document.getElementById('userCredit').textContent      = u.credit;
+
+  const iconClass = { in:'in', out:'out', pay:'pay' };
+  document.getElementById('transactionsBody').innerHTML = u.transactions.map(t => `
+    <div class="movement-row">
+      <div class="mov-date">${t.date}<br>${t.time}</div>
+      <div class="mov-info">
+        <div class="mov-icon ${t.type}">${t.icon}</div>
+        <div>
+          <div class="mov-desc">${t.desc}</div>
+          <div class="mov-ref">${t.ref}</div>
+        </div>
+      </div>
+      <div class="mov-amount ${t.amount.startsWith('+') ? 'pos' : 'neg'}">${t.amount}</div>
+      <div class="mov-status">
+        <span class="status-pill ${t.status}">${t.status === 'done' ? 'Completed' : 'Pending'}</span>
+      </div>
+    </div>`).join('');
+}
+
+
+
+const SESSION_TIMEOUT_MS = 5 * 60 * 1000;
+const SESSION_WARNING_MS = 30 * 1000;
+
+function setActiveSession(username) {
+  localStorage.setItem('activeSessionUser', username);
+  if (!localStorage.getItem('activeSessionStart')) {
+    localStorage.setItem('activeSessionStart', String(Date.now()));
+  }
+  refreshSessionTimestamp();
+  startSessionElapsedTimer();
+  monitorSessionWarning();
+}
+
+function clearActiveSession() {
+  localStorage.removeItem('activeSessionUser');
+  localStorage.removeItem('activeSessionLastActivity');
+  localStorage.removeItem('activeSessionStart');
+  hideSessionWarning();
+  stopSessionElapsedTimer();
+  clearInterval(sessionWarningInterval);
+}
+
+function refreshSessionTimestamp() {
+  localStorage.setItem('activeSessionLastActivity', String(Date.now()));
+}
+
+function isSessionExpired() {
+  const lastActivity = Number(localStorage.getItem('activeSessionLastActivity') || '0');
+  if (!lastActivity) return true;
+  return (Date.now() - lastActivity) > SESSION_TIMEOUT_MS;
+}
+
+
+function showClosingOverlay() {
+  const overlay = document.getElementById('loadingOverlay');
+  if (overlay) {
+    overlay.style.display = 'flex';
+    overlay.querySelector('.loading-text').textContent = 'Closing session securely...';
+  }
+}
+
+
+
+let loadingProgressInterval = null;
+let sessionElapsedInterval = null;
+let sessionWarningInterval = null;
+let loadingStepInterval = null;
+let activeLoaderMode = 'login';
+
+function formatClockTime(ts) {
+  const d = new Date(ts);
+  return d.toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit', hour12:true});
+}
+
+function formatElapsed(ms) {
+  const total = Math.max(0, Math.floor(ms / 1000));
+  const mins = String(Math.floor(total / 60)).padStart(2, '0');
+  const secs = String(total % 60).padStart(2, '0');
+  return `${mins}:${secs}`;
+}
+
+function setSessionStartedDisplay(ts) {
+  const started = document.getElementById('sessionStartedAt');
+  if (started) started.textContent = formatClockTime(ts);
+}
+
+function startSessionElapsedTimer() {
+  clearInterval(sessionElapsedInterval);
+  const elapsedEl = document.getElementById('sessionElapsed');
+  const startTs = Number(localStorage.getItem('activeSessionStart') || Date.now());
+  setSessionStartedDisplay(startTs);
+
+  const tick = () => {
+    if (elapsedEl) elapsedEl.textContent = formatElapsed(Date.now() - startTs);
+  };
+  tick();
+  sessionElapsedInterval = setInterval(tick, 1000);
+}
+
+function stopSessionElapsedTimer() {
+  clearInterval(sessionElapsedInterval);
+}
+
+function hideSessionWarning() {
+  const box = document.getElementById('sessionWarningBox');
+  if (box) box.style.display = 'none';
+}
+
+function showSessionWarning(remainingMs) {
+  const box = document.getElementById('sessionWarningBox');
+  const text = document.getElementById('sessionWarningText');
+  if (!box || !text) return;
+  const secs = Math.max(1, Math.ceil(remainingMs / 1000));
+  text.textContent = `Your secure session will expire in ${secs} second${secs === 1 ? '' : 's'} due to inactivity.`;
+  box.style.display = 'block';
+}
+
+function monitorSessionWarning() {
+  clearInterval(sessionWarningInterval);
+  const tick = () => {
+    const activeUser = localStorage.getItem('activeSessionUser');
+    if (!activeUser) {
+      hideSessionWarning();
+      return;
+    }
+    const lastActivity = Number(localStorage.getItem('activeSessionLastActivity') || '0');
+    if (!lastActivity) return;
+    const remaining = SESSION_TIMEOUT_MS - (Date.now() - lastActivity);
+
+    if (remaining <= 0) {
+      hideSessionWarning();
+      doLogoutConfirmed(true);
+      return;
+    }
+
+    if (remaining <= SESSION_WARNING_MS) {
+      showSessionWarning(remaining);
+    } else {
+      hideSessionWarning();
+    }
+  };
+  tick();
+  sessionWarningInterval = setInterval(tick, 1000);
+}
+
+function extendSession() {
+  refreshSessionTimestamp();
+  hideSessionWarning();
+}
+
+function confirmLogout() {
+  const overlay = document.getElementById('confirmLogoutOverlay');
+  if (overlay) overlay.style.display = 'flex';
+}
+
+function closeLogoutConfirm() {
+  const overlay = document.getElementById('confirmLogoutOverlay');
+  if (overlay) overlay.style.display = 'none';
+}
+
+function setConnectionStatus() {
+  const text = document.getElementById('connectionStatusText');
+  if (!text) return;
+  text.textContent = navigator.onLine ? 'Secure connection active' : 'Connection unavailable';
+}
+
+function setLoadingMode(mode) {
+  activeLoaderMode = mode;
+  const title = document.querySelector('.loading-text');
+  const step = document.getElementById('loadingStepText');
+  if (mode === 'logout') {
+    if (title) title.textContent = 'Closing session securely...';
+    if (step) step.textContent = 'Encrypting session termination...';
+  } else {
+    if (title) title.textContent = 'Signing in securely...';
+    if (step) step.textContent = 'Verifying credentials...';
+  }
+}
+
+function startLoadingSteps(mode, duration = 3000) {
+  clearInterval(loadingStepInterval);
+  const step = document.getElementById('loadingStepText');
+  if (!step) return;
+
+  const loginSteps = [
+    'Verifying credentials...',
+    'Establishing secure connection...',
+    'Loading account data...'
+  ];
+  const logoutSteps = [
+    'Encrypting session termination...',
+    'Clearing secure session...',
+    'Returning to sign in...'
+  ];
+  const steps = mode === 'logout' ? logoutSteps : loginSteps;
+  let index = 0;
+  step.textContent = steps[index];
+
+  const intervalTime = Math.floor(duration / steps.length);
+  loadingStepInterval = setInterval(() => {
+    index = Math.min(index + 1, steps.length - 1);
+    step.textContent = steps[index];
+    if (index >= steps.length - 1) clearInterval(loadingStepInterval);
+  }, intervalTime);
+}
+
+function animateBalanceValue(targetValueText) {
+  const el = document.querySelector('.balance-amount');
+  if (!el) return;
+
+  const small = el.querySelector('small');
+  const currencyHtml = small ? small.outerHTML : '';
+  const numeric = parseFloat(String(targetValueText).replace(/,/g, '').replace(/[^\d.]/g, ''));
+  if (isNaN(numeric)) return;
+
+  let start = 0;
+  const duration = 1800;
+  const startTime = performance.now();
+
+  function tick(now) {
+    const progress = Math.min((now - startTime) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = numeric * eased;
+    const formatted = current.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    el.innerHTML = `${formatted} ${currencyHtml}`;
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+}
+
+
+
+function startProgressBar(duration = 2000) {
+  const bar = document.getElementById('loadingProgressBar');
+  if (!bar) return;
+
+  clearInterval(loadingProgressInterval);
+  bar.style.width = '0%';
+
+  const start = Date.now();
+  loadingProgressInterval = setInterval(() => {
+    const elapsed = Date.now() - start;
+    const pct = Math.min((elapsed / duration) * 100, 100);
+    bar.style.width = pct + '%';
+
+    if (pct >= 100) {
+      clearInterval(loadingProgressInterval);
+    }
+  }, 50);
+}
+
+function resetProgressBar() {
+  const bar = document.getElementById('loadingProgressBar');
+  clearInterval(loadingProgressInterval);
+  if (bar) bar.style.width = '0%';
+}
+
+function resetOverlayText() {
+  const overlay = document.getElementById('loadingOverlay');
+  if (overlay) {
+    overlay.querySelector('.loading-text').textContent = 'Signing in securely...';
+  }
+}
+
+function showLoadingOverlay() {
+  setLoadingMode('login');
+  const overlay = document.getElementById('loadingOverlay');
+  if (overlay) overlay.style.display = 'flex';
+}
+
+function hideLoadingOverlay() {
+  const overlay = document.getElementById('loadingOverlay');
+  resetProgressBar();
+  clearInterval(loadingStepInterval);
+  if (overlay) overlay.style.display = 'none';
+}
+
+function togglePassword() {
+  const input = document.getElementById('inputPass');
+  const btn = document.getElementById('togglePasswordBtn');
+  if (!input || !btn) return;
+
+  if (input.type === 'password') {
+    input.type = 'text';
+    btn.textContent = 'Hide';
+  } else {
+    input.type = 'password';
+    btn.textContent = 'Show';
+  }
+}
+
+function bindSessionActivityListeners() {
+  ['click', 'keydown', 'mousemove', 'scroll', 'touchstart'].forEach(evt => {
+    window.addEventListener(evt, () => {
+      const activeUser = localStorage.getItem('activeSessionUser');
+      if (activeUser) refreshSessionTimestamp();
+    }, { passive: true });
+  });
+}
+
+function setActiveSession(username) {
+  localStorage.setItem('activeSessionUser', username);
+}
+
+function clearActiveSession() {
+  localStorage.removeItem('activeSessionUser');
+}
+
+function restoreSession() {
+  const username = localStorage.getItem('activeSessionUser');
+  if (!username || !users[username]) return;
+  if (isSessionExpired()) {
+    clearActiveSession();
+    return;
+  }
+  refreshSessionTimestamp();
+  if (!localStorage.getItem('activeSessionStart')) {
+    localStorage.setItem('activeSessionStart', String(Date.now()));
+  }
+
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+
+  document.getElementById('greeting').textContent   = getGreeting() + ', ' + users[username].name + ' 👋';
+  document.getElementById('topbarName').textContent = users[username].name;
+  document.getElementById('dashDate').textContent   = new Date().toLocaleDateString('en-US', {
+    weekday:'long', year:'numeric', month:'long', day:'numeric'
+  });
+
+  updateLastLoginDisplayOnly(username);
+  loadUserData(users[username]);
+  startSessionElapsedTimer();
+  monitorSessionWarning();
+  const bal = document.querySelector('.balance-amount');
+  if (bal) animateBalanceValue(bal.textContent);
+}
+
+function doLogin() {
+  const user = document.getElementById('inputUser').value.trim();
+  const pass = document.getElementById('inputPass').value.trim();
+  const error = document.getElementById('loginError');
+
+  if (!users[user] || users[user].password !== pass) {
+    error.style.display = 'block';
+    return;
+  }
+
+  error.style.display = 'none';
+  showLoadingOverlay();
+  startProgressBar(3000);
+  startLoadingSteps('login', 3000);
+
+  setTimeout(() => {
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+
+    document.getElementById('greeting').textContent = getGreeting() + ', ' + users[user].name + ' 👋';
+    document.getElementById('topbarName').textContent = users[user].name;
+    document.getElementById('dashDate').textContent = new Date().toLocaleDateString('en-US', {
+      weekday:'long', year:'numeric', month:'long', day:'numeric'
+    });
+
+    loadUserData(users[user]);
+    updateLastLogin(user);
+    localStorage.setItem('activeSessionStart', String(Date.now()));
+    setActiveSession(user);
+    const bal = document.querySelector('.balance-amount');
+    if (bal) animateBalanceValue(bal.textContent);
+    hideLoadingOverlay();
+  }, 3000);
+}
+
+function doLogout() {
+  confirmLogout();
+}
+
+function doLogoutConfirmed(force = false) {
+  closeLogoutConfirm();
+  showClosingOverlay();
+  startProgressBar(2000);
+  startLoadingSteps('logout', 2000);
+
+  setTimeout(() => {
+    clearActiveSession();
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('loginPage').style.display = 'flex';
+    resetOverlayText();
+    hideLoadingOverlay();
+  }, 2000);
+}
+
+function printStatement() { window.print(); }
+</script>
+<script>
+function updateLastLoginDisplayOnly(username) {
+  const box = document.getElementById('lastLoginBox');
+  const key = 'lastLogin_' + username;
+  const previousLogin = localStorage.getItem(key);
+
+  if (box) {
+    if (previousLogin) {
+      box.innerHTML = `🔒 Last login: ${previousLogin} &nbsp;·&nbsp; Secure session active`;
+    } else {
+      box.innerHTML = `🔒 Last login: First access &nbsp;·&nbsp; Secure session active`;
+    }
+  }
+}
+
+function updateLastLogin(username) {
+  updateLastLoginDisplayOnly(username);
+
+  const now = new Date().toLocaleString('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  });
+
+  localStorage.setItem('lastLogin_' + username, now);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  bindSessionActivityListeners();
+  restoreSession();
+  setConnectionStatus();
+  window.addEventListener('online', setConnectionStatus);
+  window.addEventListener('offline', setConnectionStatus);
+});
+</script>
+<div id="supportButton" onclick="toggleSupportMenu()" style="
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#004481;
+  color:#fff;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  cursor:pointer;
+  box-shadow:0 10px 25px rgba(0,0,0,0.25);
+  z-index:9999;">
+  🎧
+</div>
+
+<div id="supportMenu" style="
+  position:fixed;
+  bottom:90px;
+  right:20px;
+  width:260px;
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 25px 50px rgba(0,0,0,0.2);
+  display:none;
+  overflow:hidden;
+  font-family:'Inter', sans-serif;
+  z-index:9999;">
+
+  <div style="background:#004481;color:#fff;padding:14px;font-weight:600;">
+    Customer Support
+  </div>
+
+  <div style="padding:12px;font-size:13px;color:#333;">
+    Need help? Contact us:
+  </div>
+
+  <div style="padding:0 12px 14px;">
+    <a href="mailto:clientes@bbvafideicomiso.com" style="text-decoration:none;">
+      <button style="width:100%;padding:10px;margin-bottom:8px;border:none;background:#004481;color:#fff;border-radius:8px;cursor:pointer;">
+        Email Support
+      </button>
+    </a>
+
+    <a href="tel:+525590634798" style="text-decoration:none;">
+      <button style="width:100%;padding:10px;border:none;background:#eef2f7;border-radius:8px;cursor:pointer;">
+        Call Us
+      </button>
+    </a>
+  </div>
+</div>
+
+<script>
+function toggleSupportMenu() {
+  const menu = document.getElementById('supportMenu');
+  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
+</script>
+
+</body>
+</html>
